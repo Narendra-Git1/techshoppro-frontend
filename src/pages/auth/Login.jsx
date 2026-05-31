@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../../services/authService";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
 
@@ -7,6 +9,9 @@ function Login() {
     email: "",
     password: ""
   });
+
+  const { login } =
+    useContext(AuthContext);
 
   const handleChange = (e) => {
 
@@ -25,11 +30,7 @@ function Login() {
 
       const response = await loginUser(formData);
 
-      localStorage.setItem(
-        "token",
-        response.data.token
-      );
-
+      login(response.data.token);
       alert("Login Successful");
 
       console.log(response.data);

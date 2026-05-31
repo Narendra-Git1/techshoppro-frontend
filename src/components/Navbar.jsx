@@ -1,38 +1,70 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
 
-  return (
+    const { logout } =
+        useContext(AuthContext);
 
-    <nav className="bg-blue-600 text-white p-4">
+    const token =
+        localStorage.getItem("token");
 
-      <div className="container mx-auto flex justify-between items-center">
+    const handleLogout = () => {
 
-        <h1 className="text-2xl font-bold">
-          TechShopPro
-        </h1>
+        logout();
 
-        <div className="space-x-4">
+        window.location.href = "/login";
+    };
 
-          <Link to="/">
-            Home
-          </Link>
+    return (
 
-          <Link to="/login">
-            Login
-          </Link>
+        <nav className="bg-blue-600 text-white p-4">
 
-          <Link to="/register">
-            Register
-          </Link>
+            <div className="container mx-auto flex justify-between items-center">
 
-        </div>
+                <h1 className="text-2xl font-bold">
+                    TechShopPro
+                </h1>
 
-      </div>
+                <div className="space-x-4">
 
-    </nav>
+                    <Link to="/">
+                        Home
+                    </Link>
 
-  );
+                    <Link to="/products">
+                        Products
+                    </Link>
+
+                    {token ? (
+
+                        <button onClick={handleLogout}>
+                            Logout
+                        </button>
+
+                    ) : (
+
+                        <>
+                            <Link to="/login">
+                                Login
+                            </Link>
+
+                            <Link to="/register">
+                                Register
+                            </Link>
+                        </>
+
+                    )}
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    );
 }
 
 export default Navbar;

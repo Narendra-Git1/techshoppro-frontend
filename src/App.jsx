@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Products from "./pages/products/Products";
 
 function App() {
 
@@ -28,6 +29,11 @@ function App() {
         <Route
           path="/register"
           element={<Register />}
+        />
+
+        <Route
+          path="/products"
+          element={<Products />}
         />
 
       </Routes>
