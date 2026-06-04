@@ -5,18 +5,9 @@ import App from "./App";
 import "./index.css";
 
 import AuthProvider from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
 
 ReactDOM.createRoot(
-  document.getElementById("root")
-).render(
-
-  <BrowserRouter>
-
-    <AuthProvider>
-
-      <App />
-
-    </AuthProvider>
-
-  </BrowserRouter>
+document.getElementById("root")
+).render( <BrowserRouter> <AuthProvider> <CartProvider> <App /> </CartProvider> </AuthProvider> </BrowserRouter>
 );

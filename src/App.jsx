@@ -7,42 +7,32 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Products from "./pages/products/Products";
 import ProductDetails from "./pages/products/ProductDetails";
+import Cart from "./pages/cart/Cart";
 
 function App() {
-
   return (
-
     <>
       <Navbar />
 
       <Routes>
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/register"
-          element={<Register />}
-        />
+        <Route path="/products" element={<Products />} />
 
-        <Route
-          path="/products"
-          element={<Products />}
-        />
         <Route
           path="/products/:id"
           element={<ProductDetails />}
         />
 
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
       </Routes>
-
     </>
   );
 }
