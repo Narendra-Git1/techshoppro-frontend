@@ -1,26 +1,31 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
 function Cart() {
 
   const {
     cartItems,
-    removeFromCart
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
   } = useCart();
 
-  return (
-    <div className="p-6">
+  const totalPrice = cartItems.reduce(
+    (total, item) =>
+      total + item.price * item.quantity,
+    0
+  );
 
-      <h1 className="text-4xl font-bold mb-6">
+  return (
+    <div className="max-w-6xl mx-auto p-6">
+
+      <h1 className="text-4xl font-bold mb-8">
         Shopping Cart
       </h1>
 
-      <p className="text-xl mb-4">
-        Items Count: {cartItems.length}
-      </p>
-
       {cartItems.length === 0 ? (
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-xl text-gray-500">
             Your cart is empty
           </h2>
@@ -28,51 +33,109 @@ function Cart() {
 
       ) : (
 
-        <div className="space-y-4">
+        <>
+          <div className="space-y-4">
 
-          {cartItems.map((item, index) => (
+            {cartItems.map((item) => (
 
-            <div
-              key={`${item.id}-${index}`}
-              className="flex items-center gap-4 border rounded-lg p-4 shadow"
-            >
+              <div
+                key={item.id}
+                className="flex items-center justify-between border rounded-lg p-4 shadow"
+              >
 
-              <img
-                src={item.imageUrl}
-                alt={item.name}
-                className="w-24 h-24 object-cover rounded"
-              />
+                <div className="flex items-center gap-4">
 
-              <div className="flex-1">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="w-24 h-24 object-cover rounded"
+                  />
 
-                <h2 className="text-xl font-semibold">
-                  {item.name}
-                </h2>
+                  <div>
 
-                <p className="text-green-600 font-bold">
-                  ₹{item.price}
-                </p>
+                    <h2 className="text-2xl font-semibold">
+                      {item.name}
+                    </h2>
 
-                <p className="text-gray-500">
-                  {item.brand}
-                </p>
+                    <p className="text-green-600 font-bold text-xl">
+                      ₹{item.price}
+                    </p>
+
+                    <p className="text-gray-500">
+                      {item.brand}
+                    </p>
+
+                    <div className="flex items-center gap-3 mt-3">
+
+                      <button
+                        onClick={() =>
+                          decreaseQuantity(item.id)
+                        }
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                      >
+                        -
+                      </button>
+
+                      <span className="font-bold text-lg">
+                        {item.quantity}
+                      </span>
+
+                      <button
+                        onClick={() =>
+                          increaseQuantity(item.id)
+                        }
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                      >
+                        +
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <button
+                  onClick={() =>
+                    removeFromCart(item.id)
+                  }
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                >
+                  Remove
+                </button>
 
               </div>
 
-              <button
-                onClick={() =>
-                  removeFromCart(item.id)
-                }
-                className="bg-red-500 text-white px-4 py-2 rounded"
+            ))}
+
+          </div>
+
+          <div className="mt-8 border-t pt-6">
+
+            <h2 className="text-4xl font-bold">
+              Total: ₹{totalPrice.toLocaleString()}
+            </h2>
+
+            <div className="flex gap-4 mt-6">
+
+              <Link
+                to="/products"
+                className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700"
               >
-                Remove
+                Continue Shopping
+              </Link>
+
+              <button
+                className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+              >
+                Checkout
               </button>
 
             </div>
 
-          ))}
+          </div>
 
-        </div>
+        </>
 
       )}
 
