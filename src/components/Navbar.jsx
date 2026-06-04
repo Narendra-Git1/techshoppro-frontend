@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 
 import { AuthContext } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
 
-    const { logout } =
-        useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
 
-    const token =
-        localStorage.getItem("token");
+    const { cartItems } = useCart();
+
+    const token = localStorage.getItem("token");
 
     const handleLogout = () => {
 
@@ -24,9 +25,12 @@ function Navbar() {
 
             <div className="container mx-auto flex justify-between items-center">
 
-                <h1 className="text-2xl font-bold">
+                <Link
+                    to="/"
+                    className="text-2xl font-bold"
+                >
                     TechShopPro
-                </h1>
+                </Link>
 
                 <div className="space-x-4">
 
@@ -38,9 +42,16 @@ function Navbar() {
                         Products
                     </Link>
 
+                    <Link to="/cart">
+                        Cart ({cartItems.length})
+                    </Link>
+
                     {token ? (
 
-                        <button onClick={handleLogout}>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500 px-3 py-1 rounded"
+                        >
                             Logout
                         </button>
 
